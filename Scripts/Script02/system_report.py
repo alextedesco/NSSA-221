@@ -19,15 +19,15 @@ os.system ("clear")
 '''
 
 date = sp.getoutput ('date +"%Y-%m-%y"')
-hostname = ""
-domain = ""
+hostname = sp.getoutput("hostname")
+domain = sp.getoutput("domainname")
 ip_address = ""
 gateway = ""
 network_mask = ""
 dns1 = ""
 dns2 = ""
-operating_system = ""
-version = ""
+operating_system = sp.getoutput("cat /etc/os-release | sed -n '1p' | cut -d '" + '"' + "' -f 2")
+version = sp.getoutput("cat /etc/os-release | sed -n '6p' | cut -d '" + '"' + "' -f 2")
 kernel_version = ""
 capacity = sp.getoutput("df -h --total | tail -1 | tr -s ' ' | cut -d ' ' -f 2")
 space = sp.getoutput("df -h --total | tail -1 | tr -s ' ' | cut -d ' ' -f 4")
