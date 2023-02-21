@@ -24,48 +24,48 @@ domain = sp.getoutput("domainname")
 ip_address = ""
 gateway = ""
 network_mask = ""
-dns1 = ""
-dns2 = ""
+dns1 = sp.getoutput("cat /etc/resolv.conf | sed -n '3p' | cut -d ' ' -f 2")
+dns2 = sp.getoutput("cat /etc/resolv.conf | sed -n '4p' | cut -d ' ' -f 2")
 operating_system = sp.getoutput("cat /etc/os-release | sed -n '1p' | cut -d '" + '"' + "' -f 2")
-version = sp.getoutput("cat /etc/os-release | sed -n '6p' | cut -d '" + '"' + "' -f 2")
-kernel_version = ""
+version = sp.getoutput("cat /etc/os-release | sed -n '5p' | cut -d '" + '"' + "' -f 2")
+kernel_version = sp.getoutput("cat /proc/version | sed -n '1p' | cut -d ' ' -f 3")
 capacity = sp.getoutput("df -h --total | tail -1 | tr -s ' ' | cut -d ' ' -f 2")
 space = sp.getoutput("df -h --total | tail -1 | tr -s ' ' | cut -d ' ' -f 4")
-cpu = ""
-num_processors = ""
-num_cores = ""
+cpu = sp.getoutput ('cat /proc/cpuinfo | grep "model name" | head -n 1 | cut -d ' + "':' -f 2")
+num_processors = sp.getoutput ('cat /proc/cpuinfo | grep "processor" | tail -1 | cut -d ' + "':' -f 2")
+num_cores = sp.getoutput ('cat /proc/cpuinfo | grep "cores" | tail -1 | cut -d ' + "':' -f 2")
 total_ram = sp.getoutput("free -g -h -t| sed -n '4p' | tr -s ' ' | cut -d ' ' -f 2")
 available_ram = sp.getoutput("free -g -h -t| sed -n '4p' | tr -s ' ' | cut -d ' ' -f 3")
 
 
 
-print ('        ' + date + '        ')
+print ('        ' + '\u001b[31m' + 'System Report - ' + date + '\u001b[37m' + '        \n')
 
 print ("\u001b[32m" + "Device Information" + "\u001b[37m")
-print ("Hostname:              " + hostname)
-print ("Domain:              " + domain + "\n")
+print ("Hostname:                          " + hostname)
+print ("Domain:                            " + domain + "\n")
 
 print ("\u001b[32m" + "Network Information" + "\u001b[37m")
 print ("IP Address:              " + ip_address)
 print ("Gateway:              " + gateway)
 print ("Network Mask:              " + network_mask)
-print ("DNS1:              " + dns1)
-print ("DNS2:              " + dns2 + "\n")
+print ("DNS1:                              " + dns1)
+print ("DNS2:                              " + dns2 + "\n")
 
 print ("\u001b[32m" + "OS Information" + "\u001b[37m")
-print ("Operating System:              " + operating_system)
-print ("Operating Version:              " + version)
-print ("Kernel Version:              " + kernel_version + "\n")
+print ("Operating System:                  " + operating_system)
+print ("Operating Version:                 " + version)
+print ("Kernel Version:                    " + kernel_version + "\n")
 
 print ("\u001b[32m" + "Storage Information" + "\u001b[37m")
-print ("Hard Drive Capacity:              " + capacity)
-print ("Available Space:              " + space + "\n")
+print ("Hard Drive Capacity:               " + capacity)
+print ("Available Space:                   " + space + "\n")
 
 print ("\u001b[32m" + "Processor Information" + "\u001b[37m")
-print ("CPU Model:              " + cpu)
-print ("Number of processors:              " + num_processors)
-print ("Number of cores:              " + num_cores + "\n")
+print ("CPU Model:                        " + cpu)
+print ("Number of processors:             " + num_processors)
+print ("Number of cores:                  " + num_cores + "\n")
 
 print ("\u001b[32m" + "Memory Information" + "\u001b[37m")
-print ("Total RAM:              " + total_ram)
-print ("Available RAM:              " + available_ram + "\n")
+print ("Total RAM:                         " + total_ram)
+print ("Available RAM:                     " + available_ram + "\n")
