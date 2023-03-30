@@ -17,22 +17,18 @@ with open('syslog.log') as file:
 
     for line in file:
         line = line.strip()
-        line = line.split(": ")
-        # print (line[1])
+        if "Failed password for" in line:
+            line = line.split(": ")
         
-        if line[1].startswith("Failed password for invalid user"):
-            # print (line[1])
-            failedpasswd = line[1]
-            failedpasswd = failedpasswd.split(" ")
-            # print (failedpasswd[7])
-            ipaddresses.append(failedpasswd[7])
-        
-        elif line[1].startswith("Failed password for root"):
-            # print (line[1])
-            failedpasswd = line[1]
-            failedpasswd = failedpasswd.split(" ")
-            # print (failedpasswd[5])
-            ipaddresses.append(failedpasswd[5])
+            if line[1].startswith("Failed password for invalid user"):
+                failedpasswd = line[1]
+                failedpasswd = failedpasswd.split(" ")
+                ipaddresses.append(failedpasswd[7])
+            
+            elif line[1].startswith("Failed password for root"):
+                failedpasswd = line[1]
+                failedpasswd = failedpasswd.split(" ")
+                ipaddresses.append(failedpasswd[5])
 
     counts = Counter(ipaddresses)
 
